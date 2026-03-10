@@ -5,7 +5,6 @@ import html2canvas from "html2canvas";
 const Report = ({ result, formData }) => {
 
   const downloadPDF = async () => {
-
     const element = document.getElementById("report");
 
     const canvas = await html2canvas(element, {
@@ -27,106 +26,368 @@ const Report = ({ result, formData }) => {
   const isHighRisk = result.prediction === 1;
 
   return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center p-8 font-mono">
+    <>
+      <style>{`
 
-      {/* Glow blobs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500 opacity-5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-rose-500 opacity-5 rounded-full blur-3xl" />
-      </div>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap');
 
-      <div className="relative z-10 w-full max-w-xl flex flex-col gap-4">
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
 
-        {/* REPORT CARD */}
-        <div
-          id="report"
-          className="bg-gray-900 border border-white/8 rounded-sm overflow-hidden shadow-2xl"
-        >
+html,body,#root{
+width:100%;
+height:100%;
+background:#06060e;
+font-family:'DM Mono',monospace;
+}
 
-          {/* Header */}
-          <div className="px-8 pt-10 pb-8 border-b border-white/5 relative">
-            <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
-            <p className="text-xs tracking-widest text-emerald-400/60 uppercase mb-3 flex items-center gap-2">
-              <span className="w-4 h-px bg-emerald-400/50 inline-block" />
-              Clinical Analysis Report
-            </p>
-            <h1 className="text-3xl font-bold tracking-tight text-white mb-1">
-              DIABETES PREDICTION
-            </h1>
-            <p className="text-xs text-white/25 tracking-wider">
-              ML-Powered Risk Assessment · PIMA Dataset
-            </p>
-          </div>
+/* MAIN LAYOUT */
 
-          {/* Risk Badge */}
-          <div className="px-8 py-6 border-b border-white/5">
-            <p className="text-xs tracking-widest uppercase text-white/30 mb-3">Prediction Result</p>
-            <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-sm border ${
-              isHighRisk
-                ? "bg-rose-500/10 border-rose-500/30 text-rose-400"
-                : "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-            }`}>
-              <span className={`w-2 h-2 rounded-full ${isHighRisk ? "bg-rose-400" : "bg-emerald-400"} shadow-lg`}
-                style={{ boxShadow: isHighRisk ? "0 0 8px rgba(251,113,133,0.8)" : "0 0 8px rgba(52,211,153,0.8)" }}
-              />
-              <h2 className="text-xl font-bold tracking-widest uppercase">
-                {isHighRisk ? "High Risk" : "Low Risk"}
-              </h2>
+.rp-shell{
+width:100vw;
+min-height:100vh;
+display:flex;
+background:#06060e;
+}
+
+/* LEFT PANEL */
+
+.rp-left{
+flex:0 0 55%;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:40px;
+}
+
+/* REPORT CARD */
+
+.rp-card{
+width:530%;
+max-width:860px;
+background:rgba(10,10,20,0.97);
+border:1px solid rgba(255,255,255,0.08);
+box-shadow:
+0 0 0 1px rgba(0,255,180,0.08),
+0 0 40px rgba(0,255,180,0.04),
+0 40px 90px rgba(0,0,0,0.85);
+}
+
+/* HEADER */
+
+.rp-header{
+padding:90px 90px 70px;
+border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+.rp-eyebrow{
+font-size:23px;
+letter-spacing:.28em;
+color:rgba(0,255,180,0.7);
+text-transform:uppercase;
+margin-bottom:18px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.rp-pulse{
+width:30px;
+height:10px;
+border-radius:50%;
+background:${isHighRisk ? "#ff5b6e" : "#00ffb4"};
+box-shadow:0 0 12px ${isHighRisk ? "#ff5b6e" : "#00ffb4"};
+}
+
+/* TITLE */
+
+.rp-title{
+font-family:'Bebas Neue',sans-serif;
+font-size:114px;
+line-height:.85;
+color:white;
+margin-bottom:14px;
+}
+
+.rp-title span{
+font-size:50px;
+letter-spacing:.12em;
+color:transparent;
+-webkit-text-stroke:1px rgba(255,255,255,0.3);
+}
+
+/* SUBTITLE */
+
+.rp-subtitle{
+font-size:35px;
+color:rgba(255,255,255,0.45);
+}
+
+/* SECTIONS */
+
+.rp-section{
+padding:34px 50px;
+border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+.rp-section-label{
+font-size:33px;
+letter-spacing:.2em;
+text-transform:uppercase;
+color:rgba(255,255,255,0.35);
+margin-bottom:18px;
+}
+
+/* BADGE */
+
+.rp-badge{
+display:inline-flex;
+align-items:center;
+gap:14px;
+padding:14px 24px;
+border:1px solid rgba(0,255,180,0.3);
+background:rgba(0,255,180,0.08);
+}
+
+.rp-badge-text{
+font-family:'Bebas Neue';
+font-size:32px;
+letter-spacing:.18em;
+color:${isHighRisk ? "#ff7b8a" : "#00ffb4"};
+}
+
+/* TABLE */
+
+.rp-table{
+width:100%;
+border-collapse:collapse;
+}
+
+.rp-table td{
+padding:16px 0;
+}
+
+.rp-td-key{
+font-size:23px;
+letter-spacing:.15em;
+text-transform:uppercase;
+color:rgba(255,255,255,0.35);
+}
+
+.rp-td-val{
+font-size:20px;
+text-align:right;
+color:white;
+}
+
+/* SUMMARY */
+
+.rp-summary{
+font-size:33px;
+line-height:1.8;
+color:rgba(255,255,255,0.65);
+}
+
+/* FOOTER */
+
+.rp-footer{
+display:flex;
+justify-content:space-between;
+padding:20px 50px;
+background:rgba(0,0,0,0.3);
+}
+
+.rp-footer-text{
+font-size:22px;
+color:rgba(255,255,255,0.25);
+}
+
+.rp-version{
+font-size:22px;
+color:rgba(0,255,180,0.4);
+}
+
+/* BUTTON */
+
+.rp-btn{
+width:100%;
+margin-top:22px;
+padding:24px;
+font-family:'Bebas Neue';
+font-size:28px;
+letter-spacing:.2em;
+background:transparent;
+border:1px solid rgba(0,255,180,0.35);
+color:white;
+cursor:pointer;
+}
+
+.rp-btn:hover{
+border-color:#00ffb4;
+box-shadow:0 0 25px rgba(0,255,180,0.2);
+}
+
+/* RIGHT IMAGE PANEL */
+
+.rp-right{
+flex:1;
+position:relative;
+}
+
+.rp-right img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(.5) saturate(.6);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.rp-shell{
+flex-direction:column;
+}
+
+.rp-right{
+display:none;
+}
+
+.rp-left{
+flex:none;
+width:100%;
+padding:20px;
+}
+
+.rp-card{
+max-width:100%;
+}
+
+.rp-title{
+font-size:64px;
+}
+
+.rp-title span{
+font-size:46px;
+}
+
+}
+
+      `}</style>
+
+      <div className="rp-shell">
+
+        {/* LEFT REPORT */}
+        <div className="rp-left">
+
+          <div>
+
+            <div id="report" className="rp-card">
+
+              <div className="rp-header">
+
+                <div className="rp-eyebrow">
+                  <span className="rp-pulse"></span>
+                  Clinical Analysis Report
+                </div>
+
+                <div className="rp-title">
+                  DIABETES
+                  <span>PREDICTION</span>
+                </div>
+
+                <div className="rp-subtitle">
+                  ML-Powered Risk Assessment · PIMA Dataset
+                </div>
+
+              </div>
+
+              <div className="rp-section">
+
+                <div className="rp-section-label">
+                  Prediction Result
+                </div>
+
+                <div className="rp-badge">
+                  <div className="rp-badge-text">
+                    {isHighRisk ? "HIGH RISK" : "LOW RISK"}
+                  </div>
+                </div>
+
+              </div>
+
+              <div className="rp-section">
+
+                <div className="rp-section-label">
+                  Biomarker Values
+                </div>
+
+                <table className="rp-table">
+                  <tbody>
+                    {Object.entries(formData).map(([key,value]) => (
+                      <tr key={key}>
+                        <td className="rp-td-key">
+                          {key.replace(/([A-Z])/g," $1")}
+                        </td>
+                        <td className="rp-td-val">
+                          {value}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+
+              </div>
+
+              <div className="rp-section">
+
+                <div className="rp-section-label">
+                  Summary
+                </div>
+
+                <p className="rp-summary">
+                  {result.result}
+                </p>
+
+              </div>
+
+              <div className="rp-footer">
+                <span className="rp-footer-text">
+                  Auto Generated Medical Report
+                </span>
+
+                <span className="rp-version">
+                  v2.1 · PIMA Dataset
+                </span>
+              </div>
+
             </div>
+
+            <button onClick={downloadPDF} className="rp-btn">
+              Download PDF Report
+            </button>
+
           </div>
 
-          {/* Biomarker Table */}
-          <div className="px-8 py-6 border-b border-white/5">
-            <p className="text-xs tracking-widest uppercase text-white/30 mb-4">Biomarker Values</p>
-            <table className="w-full">
-              <tbody>
-                {Object.entries(formData).map(([key, value], i) => (
-                  <tr
-                    key={key}
-                    className={`group border-b border-white/4 last:border-0 transition-colors hover:bg-white/2`}
-                  >
-                    <td className="py-2.5 pr-4 text-xs tracking-widest uppercase text-white/35 w-1/2">
-                      {key.replace(/([A-Z])/g, " $1").trim()}
-                    </td>
-                    <td className="py-2.5 text-sm text-white/80 font-medium tracking-wide text-right">
-                      {value}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Summary */}
-          <div className="px-8 py-6">
-            <p className="text-xs tracking-widest uppercase text-white/30 mb-3">Summary</p>
-            <p className="text-sm text-white/50 leading-relaxed tracking-wide">{result.result}</p>
-          </div>
-
-          {/* Footer strip */}
-          <div className="px-8 py-4 bg-black/30 border-t border-white/4 flex justify-between items-center">
-            <span className="text-xs text-white/15 tracking-widest uppercase">Auto-generated</span>
-            <span className="text-xs text-emerald-400/30 tracking-wider">v2.1.0</span>
-          </div>
         </div>
 
-        {/* Download Button */}
-        <button
-          onClick={downloadPDF}
-          className="w-full py-4 bg-transparent border border-emerald-400/30 rounded-sm text-white tracking-widest uppercase text-sm font-bold relative overflow-hidden group transition-all duration-300 hover:border-emerald-400/60 hover:shadow-lg"
-          style={{ letterSpacing: "0.2em" }}
-        >
-          <span className="absolute inset-0 bg-gradient-to-r from-emerald-400/0 via-emerald-400/8 to-emerald-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <span className="relative z-10 flex items-center justify-center gap-3">
-            <svg className="w-4 h-4 text-emerald-400/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-            Download PDF Report
-          </span>
-        </button>
+        {/* RIGHT IMAGE */}
+
+        <div className="rp-right">
+
+          <img
+          src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&q=90"
+          alt="doctor"
+          />
+
+        </div>
 
       </div>
-    </div>
+
+    </>
   );
 };
 

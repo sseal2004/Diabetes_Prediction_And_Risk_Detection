@@ -47,31 +47,223 @@ const DiabetesForm = ({ setResult, setFormData }) => {
         html, body, #root {
           margin: 0; padding: 0;
           width: 100%; height: 100%;
-          overflow: hidden;
+          overflow-x: hidden;
         }
 
         .db-shell {
           width: 100vw;
-          height: 100vh;
+          min-height: 100vh;
           display: flex;
           font-family: 'DM Mono', monospace;
           background: #06060e;
-          overflow: hidden;
         }
 
-        /* ─── LEFT PANEL ─── */
+        /* ─── MOBILE (Form Only) ─── */
+        @media (max-width: 768px) {
+          .db-shell {
+            flex-direction: column;
+            background: #07070f;
+            padding: 20px 0;
+            min-height: 100vh;
+          }
+
+          .db-left {
+            flex: none;
+            width: 100%;
+            height: auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px 0;
+          }
+
+          .db-right {
+            display: none !important;
+          }
+
+          .db-card {
+            margin: 0 16px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+          .db-header {
+            padding: 24px 20px 20px;
+            text-align: center;
+          }
+
+          .db-eyebrow {
+            font-size: 16px;
+            letter-spacing: 0.12em;
+            justify-content: center;
+            margin-bottom: 12px;
+            gap: 6px;
+          }
+
+          .db-eyebrow::before {
+            width: 50px;
+            height: 1px;
+          }
+
+          .db-pulse {
+            width: 12px;
+            height: 12px;
+          }
+
+          .db-title {
+            font-size: 56px;
+            line-height: 0.95;
+            margin-bottom: 10px;
+            letter-spacing: 0.03em;
+          }
+
+          .db-title span {
+            font-size: 32px;
+            letter-spacing: 0.08em;
+          }
+
+          .db-subtitle {
+            font-size: 16px;
+            letter-spacing: 0.03em;
+            max-width: 300px;
+            margin: 0 auto;
+            line-height: 1.4;
+          }
+
+          .db-form { 
+            padding: 24px 20px 28px; 
+          }
+
+          .db-fields {
+            grid-template-columns: 1fr;
+            gap: 18px;
+            margin-bottom: 24px;
+          }
+
+          .db-field.wide { 
+            grid-column: span 1; 
+          }
+
+          .db-label {
+            margin-bottom: 10px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+          }
+
+          .db-label-text {
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+          }
+
+          .db-unit {
+            font-size: 11px;
+            margin-left: 0;
+          }
+
+          .db-input {
+            padding: 18px 16px;
+            font-size: 18px;
+            min-height: 60px;
+            letter-spacing: 0.02em;
+          }
+
+          .db-input::placeholder { 
+            font-size: 16px; 
+          }
+
+          .db-divider {
+            margin: 0 0 28px;
+            height: 1px;
+          }
+
+          .db-btn {
+            padding: 22px 20px;
+            font-size: 20px;
+            letter-spacing: 0.12em;
+            min-height: 68px;
+          }
+
+          .db-btn-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 7px;
+          }
+
+          .db-btn-inner {
+            gap: 10px;
+          }
+
+          .db-footer {
+            padding: 16px 20px;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+            margin-top: auto;
+          }
+
+          .db-footer-text, .db-version {
+            font-size: 12px;
+            letter-spacing: 0.05em;
+          }
+
+          .db-grid-bg {
+            opacity: 0.2;
+            background-size: 30px 30px;
+          }
+
+          .db-header::after {
+            left: 20px;
+            right: 20px;
+          }
+        }
+
+        /* ─── TABLET ─── */
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .db-left {
+            flex: 0 0 55%;
+          }
+
+          .db-title {
+            font-size: 120px;
+          }
+
+          .db-title span {
+            font-size: 70px;
+          }
+
+          .db-fields {
+            gap: 12px;
+          }
+
+          .db-label-text {
+            font-size: 22px;
+          }
+        }
+
+        /* ─── DESKTOP ─── */
+        @media (min-width: 1025px) {
+          .db-shell {
+            height: 100vh;
+            overflow: hidden;
+          }
+
+          .db-left {
+            flex: 0 0 50%;
+            width: 50%;
+            height: 100vh;
+          }
+        }
+
+        /* ─── BASE FORM STYLES ─── */
         .db-left {
-          flex: 0 0 50%;
-          width: 50%;
-          height: 100vh;
           background: #07070f;
           display: flex;
           flex-direction: column;
           justify-content: center;
-          position: relative;
-          z-index: 2;
-          overflow-y: auto;
-          overflow-x: hidden;
         }
 
         .db-left::before {
@@ -84,8 +276,14 @@ const DiabetesForm = ({ setResult, setFormData }) => {
           pointer-events: none;
         }
 
+        @media (min-width: 769px) {
+          .db-left::before {
+            z-index: 0;
+          }
+        }
+
         .db-grid-bg {
-          position: absolute;
+          position: fixed;
           inset: 0;
           background-image:
             linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
@@ -95,10 +293,15 @@ const DiabetesForm = ({ setResult, setFormData }) => {
           z-index: 0;
         }
 
+        @media (max-width: 768px) {
+          .db-grid-bg {
+            position: absolute;
+          }
+        }
+
         .db-card {
           position: relative;
           z-index: 1;
-          margin: 20px 28px;
           background: rgba(10,10,20,0.98);
           border: 1px solid rgba(255,255,255,0.1);
           border-radius: 4px;
@@ -293,6 +496,11 @@ const DiabetesForm = ({ setResult, setFormData }) => {
           transform: translateY(-1px);
         }
 
+        .db-btn:disabled:hover {
+          transform: none;
+          box-shadow: none;
+        }
+
         .db-btn-inner {
           display: flex; align-items: center; justify-content: center;
           gap: 13px; position: relative; z-index: 1;
@@ -313,8 +521,18 @@ const DiabetesForm = ({ setResult, setFormData }) => {
           background: rgba(0,0,0,0.22);
         }
 
-        .db-footer-text { font-size: 18.5px; letter-spacing: 0.12em; color: rgba(255,255,255,0.16); text-transform: uppercase; }
-        .db-version { font-size: 18.5px; letter-spacing: 0.1em; color: rgba(0,255,180,0.28); }
+        .db-footer-text { 
+          font-size: 18.5px; 
+          letter-spacing: 0.12em; 
+          color: rgba(255,255,255,0.16); 
+          text-transform: uppercase; 
+        }
+        
+        .db-version { 
+          font-size: 18.5px; 
+          letter-spacing: 0.1em; 
+          color: rgba(0,255,180,0.28); 
+        }
 
         .db-loading-bar {
           position: absolute; bottom: 0; left: 0;
@@ -331,143 +549,139 @@ const DiabetesForm = ({ setResult, setFormData }) => {
           100% { transform: scaleX(0); transform-origin: right; }
         }
 
-        /* ─── RIGHT PANEL ─── */
-        .db-right {
-          flex: 1;
-          position: relative;
-          overflow: hidden;
-          height: 100vh;
-        }
+        /* Desktop Right Panel Styles */
+        @media (min-width: 769px) {
+          .db-right {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            height: 100vh;
+          }
 
-        .db-right-img {
-          position: absolute;
-          inset: 0;
-          width: 100%; height: 100%;
-          object-fit: cover;
-          object-position: center;
-          filter: saturate(0.55) brightness(0.5);
-        }
+          .db-right-img {
+            position: absolute;
+            inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: saturate(0.55) brightness(0.5);
+          }
 
-        /* Left-edge feather blending into dark left panel */
-        .db-right-overlay {
-          position: absolute;
-          inset: 0;
-          background:
-            linear-gradient(90deg, #07070f 0%, rgba(7,7,15,0.5) 12%, rgba(7,7,15,0.0) 35%),
-            linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 25%, transparent 72%, rgba(0,0,0,0.6) 100%);
-        }
+          .db-right-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+              linear-gradient(90deg, #07070f 0%, rgba(7,7,15,0.5) 12%, rgba(7,7,15,0.0) 35%),
+              linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 25%, transparent 72%, rgba(0,0,0,0.6) 100%);
+          }
 
-        .db-right-tint {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(ellipse 65% 65% at 60% 45%, rgba(0,220,145,0.07) 0%, transparent 70%);
-          mix-blend-mode: screen;
-        }
+          .db-right-tint {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 65% 65% at 60% 45%, rgba(0,220,145,0.07) 0%, transparent 70%);
+            mix-blend-mode: screen;
+          }
 
-        .db-right-scan {
-          position: absolute;
-          inset: 0;
-          background-image: repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 3px,
-            rgba(0,0,0,0.07) 3px,
-            rgba(0,0,0,0.07) 4px
-          );
-          pointer-events: none;
-        }
+          .db-right-scan {
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 3px,
+              rgba(0,0,0,0.07) 3px,
+              rgba(0,0,0,0.07) 4px
+            );
+            pointer-events: none;
+          }
 
-        /* Decorative corner brackets */
-        .db-corner {
-          position: absolute;
-          width: 26px; height: 26px;
-        }
+          .db-corner {
+            position: absolute;
+            width: 26px; height: 26px;
+          }
 
-        .db-corner-tl { top: 22px; left: 22px; border-top: 1px solid rgba(0,255,180,0.28); border-left: 1px solid rgba(0,255,180,0.28); }
-        .db-corner-br { bottom: 22px; right: 22px; border-bottom: 1px solid rgba(0,255,180,0.28); border-right: 1px solid rgba(0,255,180,0.28); }
+          .db-corner-tl { top: 22px; left: 22px; border-top: 1px solid rgba(0,255,180,0.28); border-left: 1px solid rgba(0,255,180,0.28); }
+          .db-corner-br { bottom: 22px; right: 22px; border-bottom: 1px solid rgba(0,255,180,0.28); border-right: 1px solid rgba(0,255,180,0.28); }
 
-        /* Top-right stat chips */
-        .db-stats {
-          position: absolute;
-          top: 44px;
-          right: 36px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          align-items: flex-end;
-        }
+          .db-stats {
+            position: absolute;
+            top: 44px;
+            right: 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+          }
 
-        .db-stat {
-          background: rgba(7,7,15,0.75);
-          border: 1px solid rgba(0,255,180,0.14);
-          border-radius: 2px;
-          padding: 8px 14px;
-          backdrop-filter: blur(10px);
-          min-width: 110px;
-        }
+          .db-stat {
+            background: rgba(7,7,15,0.75);
+            border: 1px solid rgba(0,255,180,0.14);
+            border-radius: 2px;
+            padding: 8px 14px;
+            backdrop-filter: blur(10px);
+            min-width: 110px;
+          }
 
-        .db-stat-val {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 24px;
-          color: rgba(0,255,180,0.88);
-          letter-spacing: 0.06em;
-          line-height: 1;
-        }
+          .db-stat-val {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            color: rgba(0,255,180,0.88);
+            letter-spacing: 0.06em;
+            line-height: 1;
+          }
 
-        .db-stat-label {
-          font-family: 'DM Mono', monospace;
-          font-size: 8px;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.28);
-          margin-top: 3px;
-        }
+          .db-stat-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.28);
+            margin-top: 3px;
+          }
 
-        /* Bottom caption */
-        .db-caption {
-          position: absolute;
-          bottom: 44px;
-          right: 36px;
-          text-align: right;
-        }
+          .db-caption {
+            position: absolute;
+            bottom: 44px;
+            right: 36px;
+            text-align: right;
+          }
 
-        .db-caption-tag {
-          font-family: 'DM Mono', monospace;
-          font-size: 49px;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          color: rgba(0,255,180,0.42);
-          margin-bottom: 8px;
-        }
+          .db-caption-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 49px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: rgba(0,255,180,0.42);
+            margin-bottom: 8px;
+          }
 
-        .db-caption-title {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 146px;
-          line-height: 0.88;
-          color: rgba(255,255,255,0.82);
-          letter-spacing: 0.05em;
-          text-shadow: 0 4px 40px rgba(0,0,0,0.9);
-        }
+          .db-caption-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 146px;
+            line-height: 0.88;
+            color: rgba(255,255,255,0.82);
+            letter-spacing: 0.05em;
+            text-shadow: 0 4px 40px rgba(0,0,0,0.9);
+          }
 
-        .db-caption-sub {
-          font-family: 'DM Mono', monospace;
-          font-size: 60px;
-          color: rgba(255,255,255,0.28);
-          letter-spacing: 0.1em;
-          margin-top: 10px;
-        }
+          .db-caption-sub {
+            font-family: 'DM Mono', monospace;
+            font-size: 60px;
+            color: rgba(255,255,255,0.28);
+            letter-spacing: 0.1em;
+            margin-top: 10px;
+          }
 
-        /* Horizontal rule accent */
-        .db-caption-line {
-          width: 48px;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(0,255,180,0.45));
-          margin: 10px 0 10px auto;
+          .db-caption-line {
+            width: 48px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,255,180,0.45));
+            margin: 10px 0 10px auto;
+          }
         }
       `}</style>
 
       <div className="db-shell">
-
         {/* ── LEFT: Form ── */}
         <div className="db-left">
           <div className="db-grid-bg" />
@@ -531,25 +745,18 @@ const DiabetesForm = ({ setResult, setFormData }) => {
           </div>
         </div>
 
-        {/* ── RIGHT: Visual Panel ── */}
+        {/* ── RIGHT: Visual Panel (Desktop Only) ── */}
         <div className="db-right">
-          {/* Medical/human body Unsplash image */}
           <img
             className="db-right-img"
             src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&q=90&fit=crop&crop=center"
             alt="Medical visualization"
           />
-
           <div className="db-right-overlay" />
           <div className="db-right-tint" />
           <div className="db-right-scan" />
-
-          {/* Corner brackets */}
           <div className="db-corner db-corner-tl" />
           <div className="db-corner db-corner-br" />
-
-
-          {/* Caption */}
           <div className="db-caption">
             <div className="db-caption-tag">PIMA Indians Dataset</div>
             <div className="db-caption-title">
@@ -559,7 +766,6 @@ const DiabetesForm = ({ setResult, setFormData }) => {
             <div className="db-caption-sub">Early detection saves lives</div>
           </div>
         </div>
-
       </div>
     </>
   );
