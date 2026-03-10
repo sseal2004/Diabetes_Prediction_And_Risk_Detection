@@ -3,27 +3,40 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 const Report = ({ result, formData }) => {
+const downloadPDF = async () => {
+  const element = document.getElementById("report");
 
-  const downloadPDF = async () => {
-    const element = document.getElementById("report");
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#06060e"
+  });
 
-    const canvas = await html2canvas(element, {
-      scale: 2
-    });
+  const imgData = canvas.toDataURL("image/png");
 
-    const imgData = canvas.toDataURL("image/png");
+  const pdf = new jsPDF("p", "mm", "a4");
 
-    const pdf = new jsPDF("p", "mm", "a4");
+  const pdfWidth = 210;
+  const pdfHeight = 297;
 
-    const imgWidth = 210;
-    const imgHeight = canvas.height * imgWidth / canvas.width;
+  const imgWidth = pdfWidth;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+  let heightLeft = imgHeight;
+  let position = 0;
 
-    pdf.save("diabetes_report.pdf");
-  };
+  pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+  heightLeft -= pdfHeight;
 
-  const isHighRisk = result.prediction === 1;
+  while (heightLeft > 0) {
+    position = -(imgHeight - heightLeft);
+    pdf.addPage();
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pdfHeight;
+  }
+
+  pdf.save("diabetes_report.pdf");
+};  const isHighRisk = result.prediction === 1;
 
   return (
     <>
@@ -66,7 +79,7 @@ padding:40px;
 /* REPORT CARD */
 
 .rp-card{
-width:530%;
+width:100%;
 max-width:860px;
 background:rgba(10,10,20,0.97);
 border:1px solid rgba(255,255,255,0.08);
