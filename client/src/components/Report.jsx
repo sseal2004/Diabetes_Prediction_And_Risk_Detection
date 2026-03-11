@@ -64,6 +64,7 @@ width:100vw;
 min-height:100vh;
 display:flex;
 background:#06060e;
+align-items:stretch;
 }
 
 /* LEFT PANEL */
@@ -74,6 +75,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 padding:40px;
+min-height:100vh;
 }
 
 /* REPORT CARD */
@@ -222,7 +224,135 @@ color:rgba(255,255,255,0.25);
 font-size:22px;
 color:rgba(0,255,180,0.4);
 }
+ /* Desktop Right Panel Styles */
+        @media (min-width: 769px) {
+          .db-right {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            height: auto;
+          }
 
+          .db-right-img {
+            position: absolute;
+            inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: saturate(0.55) brightness(0.5);
+          }
+
+          .db-right-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+              linear-gradient(90deg, #07070f 0%, rgba(7,7,15,0.5) 12%, rgba(7,7,15,0.0) 35%),
+              linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 25%, transparent 72%, rgba(0,0,0,0.6) 100%);
+          }
+
+          .db-right-tint {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 65% 65% at 60% 45%, rgba(0,220,145,0.07) 0%, transparent 70%);
+            mix-blend-mode: screen;
+          }
+
+          .db-right-scan {
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 3px,
+              rgba(0,0,0,0.07) 3px,
+              rgba(0,0,0,0.07) 4px
+            );
+            pointer-events: none;
+          }
+
+          .db-corner {
+            position: absolute;
+            width: 26px; height: 26px;
+          }
+
+          .db-corner-tl { top: 22px; left: 22px; border-top: 1px solid rgba(0,255,180,0.28); border-left: 1px solid rgba(0,255,180,0.28); }
+          .db-corner-br { bottom: 22px; right: 22px; border-bottom: 1px solid rgba(0,255,180,0.28); border-right: 1px solid rgba(0,255,180,0.28); }
+
+          .db-stats {
+            position: absolute;
+            top: 44px;
+            right: 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+          }
+
+          .db-stat {
+            background: rgba(7,7,15,0.75);
+            border: 1px solid rgba(0,255,180,0.14);
+            border-radius: 2px;
+            padding: 8px 14px;
+            backdrop-filter: blur(10px);
+            min-width: 110px;
+          }
+
+          .db-stat-val {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            color: rgba(0,255,180,0.88);
+            letter-spacing: 0.06em;
+            line-height: 1;
+          }
+
+          .db-stat-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.28);
+            margin-top: 3px;
+          }
+
+          .db-caption {
+            position: absolute;
+            bottom: 44px;
+            right: 36px;
+            text-align: right;
+          }
+
+          .db-caption-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 49px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: rgba(0,255,180,0.42);
+            margin-bottom: 8px;
+          }
+
+          .db-caption-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 146px;
+            line-height: 0.88;
+            color: rgba(255,255,255,0.82);
+            letter-spacing: 0.05em;
+            text-shadow: 0 4px 40px rgba(0,0,0,0.9);
+          }
+
+          .db-caption-sub {
+            font-family: 'DM Mono', monospace;
+            font-size: 60px;
+            color: rgba(255,255,255,0.28);
+            letter-spacing: 0.1em;
+            margin-top: 10px;
+          }
+
+          .db-caption-line {
+            width: 48px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,255,180,0.45));
+            margin: 10px 0 10px auto;
+          }
 /* BUTTON */
 
 .rp-btn{
@@ -389,13 +519,26 @@ font-size:46px;
 
         {/* RIGHT IMAGE */}
 
-        <div className="rp-right">
-
+        {/* ── RIGHT: Visual Panel (Desktop Only) ── */}
+        <div className="db-right">
           <img
-          src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&q=90"
-          alt="doctor"
+            className="db-right-img"
+            src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&q=90&fit=crop&crop=center"
+            alt="Medical visualization"
           />
-
+          <div className="db-right-overlay" />
+          <div className="db-right-tint" />
+          <div className="db-right-scan" />
+          <div className="db-corner db-corner-tl" />
+          <div className="db-corner db-corner-br" />
+          <div className="db-caption">
+            <div className="db-caption-tag">PIMA Indians Dataset</div>
+            <div className="db-caption-title">
+              KNOW YOUR<br />RISK SCORE
+            </div>
+            <div className="db-caption-line" />
+            <div className="db-caption-sub">Early detection saves lives</div>
+          </div>
         </div>
 
       </div>
