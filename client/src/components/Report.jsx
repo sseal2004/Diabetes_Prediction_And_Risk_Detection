@@ -39,14 +39,12 @@ const Report = ({ result, formData }) => {
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body, #root { width: 100%; height: 100%; background: #06060e; font-family: 'DM Mono', monospace; }
 
-        /* ── Pulse animation ── */
         @keyframes rp-blink {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.15; }
         }
         .rp-pulse-anim { animation: rp-blink 2s ease-in-out infinite; }
 
-        /* ── Complex box-shadows ── */
         .rp-card-shadow {
           box-shadow:
             0 0 0 1px rgba(0,255,180,0.08),
@@ -57,7 +55,6 @@ const Report = ({ result, formData }) => {
           box-shadow: 0 0 25px rgba(0,255,180,0.2);
         }
 
-        /* ── Right panel backgrounds ── */
         .db-right-overlay {
           background:
             linear-gradient(90deg, #07070f 0%, rgba(7,7,15,0.5) 12%, rgba(7,7,15,0) 35%),
@@ -74,38 +71,40 @@ const Report = ({ result, formData }) => {
 
       {/* ── Shell ── */}
       <div
-        className="flex w-screen min-h-screen bg-[#06060e] items-stretch
-                   max-[900px]:flex-col"
+        className="flex w-screen min-h-screen bg-[#06060e] items-stretch"
         style={{ fontFamily: "'DM Mono', monospace" }}
       >
 
-        {/* ══ LEFT: Report ══ */}
+        {/* ══ LEFT: Report — full width on mobile, 55% on desktop ══ */}
         <div
-          className="flex-[0_0_55%] flex items-center justify-center
+          className="w-full min-[769px]:flex-[0_0_55%] flex items-center justify-center
                      p-10 min-h-screen
-                     max-[900px]:flex-none max-[1000px]:w-full max-[900px]:p-5"
+                     max-[768px]:p-5"
         >
-          <div>
+          <div className="w-full">
 
             {/* ── Report Card ── */}
             <div
               id="report"
-              className="rp-card-shadow w-full max-w-[960px]
+              className="rp-card-shadow w-full max-w-[960px] mx-auto
                          bg-[rgba(10,10,20,0.97)] border border-white/[0.08]
-                         max-[900px]:max-w-full"
+                         max-[768px]:max-w-full"
             >
 
               {/* Header */}
-              <div className="px-[90px] pt-[90px] pb-[70px] border-b border-white/[0.06] max-[900px]:px-6 max-[900px]:pt-8 max-[900px]:pb-6">
+              <div className="px-[90px] pt-[90px] pb-[70px] border-b border-white/[0.06]
+                              max-[768px]:px-6 max-[768px]:pt-8 max-[768px]:pb-6">
 
                 {/* Eyebrow */}
                 <div
                   className="flex items-center gap-[10px] mb-[18px]
                              text-[23px] tracking-[0.28em] text-[rgba(0,255,180,0.7)]
-                             uppercase font-['DM_Mono']"
+                             uppercase font-['DM_Mono']
+                             max-[768px]:text-[14px] max-[768px]:tracking-[0.15em]"
                 >
                   <span
-                    className="rp-pulse-anim flex-shrink-0 w-[30px] h-[10px] rounded-[50%]"
+                    className="rp-pulse-anim flex-shrink-0 w-[30px] h-[10px] rounded-[50%]
+                               max-[768px]:w-[10px] max-[768px]:h-[10px]"
                     style={{
                       background: isHighRisk ? "#ff5b6e" : "#00ffb4",
                       boxShadow: `0 0 12px ${isHighRisk ? "#ff5b6e" : "#00ffb4"}`
@@ -116,13 +115,13 @@ const Report = ({ result, formData }) => {
 
                 {/* Title */}
                 <div
-                  className="font-['Bebas_Neue'] text-[174px] leading-[0.85] text-white mb-[14px]
-                             max-[900px]:text-[64px]"
+                  className="font-['Bebas_Neue'] text-[114px] leading-[0.85] text-white mb-[14px]
+                             max-[768px]:text-[52px]"
                 >
                   DIABETES
                   <span
-                    className="block text-transparent text-[10px] tracking-[0.12em]
-                               max-[900px]:text-[796px]"
+                    className="block text-transparent text-[50px] tracking-[0.12em]
+                               max-[768px]:text-[30px]"
                     style={{ WebkitTextStroke: '1px rgba(255,255,255,0.3)' }}
                   >
                     PREDICTION
@@ -130,22 +129,27 @@ const Report = ({ result, formData }) => {
                 </div>
 
                 {/* Subtitle */}
-                <div className="text-[35px] text-white/[0.45] font-['DM_Mono']">
+                <div className="text-[35px] text-white/[0.45] font-['DM_Mono']
+                                max-[768px]:text-[14px] max-[768px]:leading-[1.5]">
                   ML-Powered Risk Assessment · PIMA Dataset
                 </div>
               </div>
 
               {/* Section: Prediction Result */}
-              <div className="px-[50px] py-[34px] border-b border-white/[0.05] max-[900px]:px-6">
-                <div className="text-[53px] tracking-[0.2em] uppercase text-white/[0.35] mb-[18px] font-['DM_Mono']">
+              <div className="px-[50px] py-[34px] border-b border-white/[0.05]
+                              max-[768px]:px-6 max-[768px]:py-5">
+                <div className="text-[53px] tracking-[0.2em] uppercase text-white/[0.35] mb-[18px] font-['DM_Mono']
+                                max-[768px]:text-[13px] max-[768px]:mb-3">
                   Prediction Result
                 </div>
                 <div
                   className="inline-flex items-center gap-[14px] px-6 py-[14px]
-                             border border-[rgba(0,255,180,0.3)] bg-[rgba(0,255,180,0.08)]"
+                             border border-[rgba(0,255,180,0.3)] bg-[rgba(0,255,180,0.08)]
+                             max-[768px]:px-4 max-[768px]:py-3"
                 >
                   <span
-                    className="font-['Bebas_Neue'] text-[32px] tracking-[0.18em]"
+                    className="font-['Bebas_Neue'] text-[32px] tracking-[0.18em]
+                               max-[768px]:text-[22px]"
                     style={{ color: isHighRisk ? "#ff7b8a" : "#00ffb4" }}
                   >
                     {isHighRisk ? "HIGH RISK" : "LOW RISK"}
@@ -154,21 +158,25 @@ const Report = ({ result, formData }) => {
               </div>
 
               {/* Section: Biomarker Values */}
-              <div className="px-[50px] py-[34px] border-b border-white/[0.05] max-[900px]:px-6">
-                <div className="text-[53px] tracking-[0.2em] uppercase text-white/[0.35] mb-[18px] font-['DM_Mono']">
+              <div className="px-[50px] py-[34px] border-b border-white/[0.05]
+                              max-[768px]:px-6 max-[768px]:py-5">
+                <div className="text-[53px] tracking-[0.2em] uppercase text-white/[0.35] mb-[18px] font-['DM_Mono']
+                                max-[768px]:text-[13px] max-[768px]:mb-3">
                   Biomarker Values
                 </div>
                 <table className="w-full border-collapse">
                   <tbody>
                     {Object.entries(formData).map(([key, value]) => (
-                      <tr key={key}>
+                      <tr key={key} className="border-b border-white/[0.04] last:border-0">
                         <td
-                          className="py-4 text-[43px] tracking-[0.15em] uppercase text-white/[0.35] font-['DM_Mono']"
+                          className="py-4 text-[43px] tracking-[0.15em] uppercase text-white/[0.35] font-['DM_Mono']
+                                     max-[768px]:py-2 max-[768px]:text-[12px] max-[768px]:tracking-[0.08em]"
                         >
                           {key.replace(/([A-Z])/g, " $1")}
                         </td>
                         <td
-                          className="py-4 text-[43px] text-right text-white font-['DM_Mono']"
+                          className="py-4 text-[43px] text-right text-white font-['DM_Mono']
+                                     max-[768px]:py-2 max-[768px]:text-[12px]"
                         >
                           {value}
                         </td>
@@ -179,21 +187,27 @@ const Report = ({ result, formData }) => {
               </div>
 
               {/* Section: Summary */}
-              <div className="px-[50px] py-[34px] border-b border-white/[0.05] max-[900px]:px-6">
-                <div className="text-[33px] tracking-[0.2em] uppercase text-white/[0.35] mb-[18px] font-['DM_Mono']">
+              <div className="px-[50px] py-[34px] border-b border-white/[0.05]
+                              max-[768px]:px-6 max-[768px]:py-5">
+                <div className="text-[33px] tracking-[0.2em] uppercase text-white/[0.35] mb-[18px] font-['DM_Mono']
+                                max-[768px]:text-[13px] max-[768px]:mb-3">
                   Summary
                 </div>
-                <p className="text-[33px] leading-[1.8] text-white/[0.65] font-['DM_Mono']">
+                <p className="text-[33px] leading-[1.8] text-white/[0.65] font-['DM_Mono']
+                              max-[768px]:text-[13px] max-[768px]:leading-[1.6]">
                   {result.result}
                 </p>
               </div>
 
               {/* Footer */}
-              <div className="flex justify-between px-[50px] py-5 bg-black/30 max-[900px]:px-6">
-                <span className="text-[22px] text-white/[0.25] font-['DM_Mono']">
+              <div className="flex justify-between px-[50px] py-5 bg-black/30
+                              max-[768px]:px-6 max-[768px]:py-3 max-[768px]:flex-col max-[768px]:gap-1">
+                <span className="text-[22px] text-white/[0.25] font-['DM_Mono']
+                                 max-[768px]:text-[11px]">
                   Auto Generated Medical Report
                 </span>
-                <span className="text-[22px] text-[rgba(0,255,180,0.4)] font-['DM_Mono']">
+                <span className="text-[22px] text-[rgba(0,255,180,0.4)] font-['DM_Mono']
+                                 max-[768px]:text-[11px]">
                   v2.1 · PIMA Dataset
                 </span>
               </div>
@@ -206,15 +220,16 @@ const Report = ({ result, formData }) => {
                          font-['Bebas_Neue'] text-[28px] tracking-[0.2em]
                          bg-transparent border border-[rgba(0,255,180,0.35)]
                          text-white cursor-pointer transition-all duration-300
-                         hover:border-[#00ffb4]"
+                         hover:border-[#00ffb4]
+                         max-[768px]:py-4 max-[768px]:text-[20px]"
             >
               Download PDF Report
             </button>
           </div>
         </div>
 
-        {/* ══ RIGHT: Visual Panel (Desktop Only) ══ */}
-        <div className="flex-1 relative hidden min-[769px]:block">
+        {/* ══ RIGHT: Visual Panel — desktop only ══ */}
+        <div className="hidden min-[769px]:flex flex-1 relative">
           <img
             src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&q=90&fit=crop&crop=center"
             alt="Medical visualization"
