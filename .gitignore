@@ -1,13 +1,14 @@
+# ----------------------
+# Python
+# ----------------------
 __pycache__/
 *.py[codz]
 *$py.class
-
 *.so
 
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -23,12 +24,16 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+# PyInstaller
 *.manifest
 *.spec
 
+# Logs
+*.log
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Unit test / coverage
 htmlcov/
 .tox/
 .nox/
@@ -43,42 +48,50 @@ coverage.xml
 .pytest_cache/
 cover/
 
-*.mo
-*.pot
-
-*.log
+# Django / Flask
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-
 instance/
 .webassets-cache
 
+# Scrapy
 .scrapy
 
+# Docs
 docs/_build/
 
+# PyBuilder
 .pybuilder/
 target/
 
-# Jupyter Notebook
+# Jupyter
 .ipynb_checkpoints
 
+# IPython
 profile_default/
 ipython_config.py
 
+# PDM
 .pdm-python
 .pdm-build/
 
+# Pixi
 .pixi
 
+# Packages
 __pypackages__/
 
+# Celery
 celerybeat-schedule
 celerybeat.pid
 
+# SageMath
 *.sage.py
 
+# ----------------------
+# Environment files
+# ----------------------
 .env
 .envrc
 .venv
@@ -88,34 +101,52 @@ ENV/
 env.bak/
 venv.bak/
 
+# ----------------------
+# IDE files
+# ----------------------
 .spyderproject
 .spyproject
-
 .ropeproject
-
-/site
-
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-.ruff_cache/
-
-.pypirc
-
 .cursorignore
 .cursorindexingignore
 
+# ----------------------
+# Static site
+# ----------------------
+/site
+
+# ----------------------
+# Type checkers
+# ----------------------
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+
+# ----------------------
+# Cython
+# ----------------------
+cython_debug/
+
+# ----------------------
+# Ruff
+# ----------------------
+.ruff_cache/
+
+# ----------------------
+# PyPI
+# ----------------------
+.pypirc
+
+# ----------------------
+# Marimo
+# ----------------------
 marimo/_static/
 marimo/_lsp/
 __marimo__/
-node_modules
+
+# ----------------------
+# Node / React
+# ----------------------
+node_modules/
